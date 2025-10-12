@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/asticode/go-astikit"
-	"github.com/asticode/go-astilectron"
+	"github.com/firebat20/go-astilectron"
 )
 
 func main() {

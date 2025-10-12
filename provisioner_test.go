@@ -2,13 +2,13 @@ package astilectron
 
 import (
 	"context"
-	"github.com/asticode/go-astikit"
-	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/asticode/go-astikit"
+	"github.com/stretchr/testify/assert"
 )
 
 func testProvisionerSuccessful(t *testing.T, p Paths, osName, arch, versionAstilectron, versionElectron string) {
@@ -16,7 +16,7 @@ func testProvisionerSuccessful(t *testing.T, p Paths, osName, arch, versionAstil
 	assert.NoError(t, err)
 	_, err = os.Stat(p.AppExecutable())
 	assert.NoError(t, err)
-	b, err := ioutil.ReadFile(p.ProvisionStatus())
+	b, err := os.ReadFile(p.ProvisionStatus())
 	assert.NoError(t, err)
 	assert.Equal(t, "{\"astilectron\":{\"version\":\""+versionAstilectron+"\"},\"electron\":{\""+provisionStatusElectronKey(osName, arch)+"\":{\"version\":\""+versionElectron+"\"}}}\n", string(b))
 }
@@ -93,14 +93,14 @@ func TestDefaultProvisioner(t *testing.T) {
 	_, err = os.Stat(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Frameworks", o.AppName+" Helper.app", "Contents", "MacOS", o.AppName+" Helper"))
 	assert.NoError(t, err)
 	// Icon
-	b, err := ioutil.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Resources", "electron.icns"))
+	b, err := os.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Resources", "electron.icns"))
 	assert.NoError(t, err)
 	assert.Equal(t, "body", string(b))
 	// Replace
-	b, err = ioutil.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Info.plist"))
+	b, err = os.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Info.plist"))
 	assert.NoError(t, err)
 	assert.Equal(t, "<string>"+o.AppName+" Test</string>", string(b))
-	b, err = ioutil.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Frameworks", o.AppName+" Helper.app", "Contents", "Info.plist"))
+	b, err = os.ReadFile(filepath.Join(p.ElectronDirectory(), o.AppName+".app", "Contents", "Frameworks", o.AppName+" Helper.app", "Contents", "Info.plist"))
 	assert.NoError(t, err)
 	assert.Equal(t, "<string>"+o.AppName+" Test</string>", string(b))
 }

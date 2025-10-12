@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -21,7 +20,7 @@ type mockedHandler struct {
 }
 
 func (h *mockedHandler) readFile(rw http.ResponseWriter, path string) {
-	var b, err = ioutil.ReadFile(path)
+	var b, err = os.ReadFile(path)
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
 		return
@@ -74,7 +73,7 @@ func TestDownload(t *testing.T) {
 	err = Download(context.Background(), &logger{}, d, s.URL, dst)
 	assert.NoError(t, err)
 	defer os.Remove(dst)
-	b, err := ioutil.ReadFile(dst)
+	b, err := os.ReadFile(dst)
 	assert.NoError(t, err)
 	assert.Equal(t, "body", string(b))
 }
@@ -83,9 +82,9 @@ func TestDownload(t *testing.T) {
 func mockedDisembedder(src string) ([]byte, error) {
 	switch src {
 	case "astilectron":
-		return ioutil.ReadFile("testdata/provisioner/astilectron/disembedder.zip")
+		return os.ReadFile("testdata/provisioner/astilectron/disembedder.zip")
 	case "electron/linux":
-		return ioutil.ReadFile("testdata/provisioner/electron/linux/electron.zip")
+		return os.ReadFile("testdata/provisioner/electron/linux/electron.zip")
 	case "test":
 		return []byte("body"), nil
 	default:
@@ -105,7 +104,7 @@ func TestDisembed(t *testing.T) {
 	err = Disembed(context.Background(), &logger{}, mockedDisembedder, "test", dst)
 	assert.NoError(t, err)
 	defer os.Remove(dst)
-	b, err := ioutil.ReadFile(dst)
+	b, err := os.ReadFile(dst)
 	assert.NoError(t, err)
 	assert.Equal(t, "body", string(b))
 }

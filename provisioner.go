@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -291,7 +290,7 @@ func (p *defaultProvisioner) provisionElectronFinishDarwinReplace(appName string
 
 		// Read file
 		var b []byte
-		if b, err = ioutil.ReadFile(path); err != nil {
+		if b, err = os.ReadFile(path); err != nil {
 			return fmt.Errorf("reading %s failed: %w", path, err)
 		}
 
