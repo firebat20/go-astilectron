@@ -3,7 +3,7 @@ module github.com/firebat20/go-astilectron
 go 1.25
 
 require (
-	github.com/asticode/go-astikit v0.56.0
+	github.com/asticode/go-astikit v0.57.1
 	github.com/stretchr/testify v1.11.1
 )
 
