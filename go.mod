@@ -1,6 +1,6 @@
 module github.com/firebat20/go-astilectron
 
-go 1.25
+go 1.26
 
 require (
 	github.com/asticode/go-astikit v0.57.1
