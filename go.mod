@@ -1,9 +1,9 @@
 module github.com/firebat20/go-astilectron
 
-go 1.26
+go 1.25
 
 require (
-	github.com/asticode/go-astikit v0.58.0
+	github.com/asticode/go-astikit v0.59.0
 	github.com/stretchr/testify v1.11.1
 )
 
