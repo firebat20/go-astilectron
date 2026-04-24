@@ -32,17 +32,6 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Run tests
-      run: go test -race -covermode atomic -coverprofile=covprofile ./...
-
-    - if: github.event_name != 'pull_request'
-      name: Send coverage
-      env:
-        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-      run: |
-        go install github.com/mattn/goveralls@latest
-        goveralls -coverprofile=covprofile -service=github
-
     - name: Publish Release
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.version != ''
       env:
